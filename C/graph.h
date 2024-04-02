@@ -1,21 +1,25 @@
 #ifndef _GRAPH_H_
 #define _GRAPH_H_
 
-#include <bool.h>
-#include <linked_list.h>
+#include <stdbool.h>
+#include "linked_list.h"
 
-struct node {
+struct graph_vertice {
 	int name;
-	struct linked_list neightbours;
+	struct linked_list* neighbours;
 };
 
 struct graph {
-	int node_size;
-	struct node nodes[];
+	int size;
+	struct graph_vertice* vertices;
 };
 
-struct graph create_graph(int size, bool complete);
+struct graph* g_create(int size, bool complete);
 
-int[] depth_first_search(struct graph, int strt_node);
+void g_free(struct graph* graph);
+
+int* depth_first_search(struct graph* graph, int strt_node);
+
+int* breadth_first_search(struct graph* graph, int strt_node);
 
 #endif

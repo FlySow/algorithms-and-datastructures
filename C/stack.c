@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "stack.h"
 #include <stdbool.h>
-
+#include <stdio.h>
 
 void s_push(struct stack* stack, void* value) {
 	struct stack_node* node = malloc(sizeof(struct stack_node));
