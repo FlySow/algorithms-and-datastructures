@@ -74,3 +74,9 @@ void bh_free(struct binary_heap* bh) {
 	da_free(bh->parents);
 	free(bh);
 }
+
+bool bh_empty(struct binary_heap* bh) {
+	return bh->size == 0;
+}
+
+

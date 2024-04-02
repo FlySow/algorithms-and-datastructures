@@ -2,6 +2,7 @@
 #define _BINARY_HEAP_H_
 
 #include "dynamic_array.h"
+#include <stdbool.h>
 
 struct binary_heap {
 	struct dynamic_array* parents;
@@ -13,7 +14,6 @@ struct binary_heap* bh_create(int size, int (*compare)(const void*, const void*)
 
 void bh_percolate_up(struct binary_heap* bh, int i);
 
-
 void bh_percolate_down(struct binary_heap* bh, int i);
 
 void* bh_extract(struct binary_heap* bh);
@@ -22,5 +22,6 @@ void bh_insert(struct binary_heap* bh, void* value);
 
 void bh_free(struct binary_heap* bh);
 
+bool bh_empty(struct binary_heap* bh);
 
 #endif

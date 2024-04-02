@@ -39,7 +39,9 @@ int main(void) {
 
 	printf("Test for stack data structure\n");
 	struct stack* stack = s_create(10, init);
-	printf("%d\n", *((int *)s_pop(stack)));
+	int* s_value = s_pop(stack);
+	printf("%d\n", *s_value);
+	free(s_value);
 
 	s_push(stack, init(10));
 	
@@ -49,27 +51,43 @@ int main(void) {
 	struct queue* queue = q_create(10, init);
 
 	q_queue(queue, init(10));
-	while(!q_empty(queue)) 
-		printf("%d ", *((int *) q_dequeue(queue)));
+	while(!q_empty(queue)) {
+		int* q_value = (int *) q_dequeue(queue);
+		printf("%d ", *q_value);
+		free(q_value);
+	}
 	
 	printf("\n");
 	q_free(queue);
 
 	printf("Test for graph data structure\n");
-	struct graph* graph = g_create(10, true);
+	struct graph* graph = g_create(10, false);
+	
+	add_edge(graph, 0, 1, 1, true);
+	add_edge(graph, 2, 4, 4, false);
+	add_edge(graph, 4, 3, 5, false);
+	add_edge(graph, 5, 6, 1, true);
+	add_edge(graph, 6, 7, 2, true);
+	add_edge(graph, 6, 8, 3, true);
+	add_edge(graph, 7, 8, 0, true);
 
-	int* vertices = depth_first_search(graph, 0);
+	int* vertices = depth_first_search(graph, 5);
 	
 	for(int i = 0; i < graph->size; i++)
 		printf("%d ", vertices[i]);
 	printf("\n");
 	free(vertices);
 
-	vertices = breadth_first_search(graph, 0);
+	vertices = breadth_first_search(graph, 5);
 	for(int i = 0; i < graph->size; i++) 
 		printf("%d ", vertices[i]);
 	printf("\n");
 	free(vertices);
+	
+	int* pred = djikstra(graph, 5);
+	printf("%d\n", pred[8]);
+	
+	free(pred);
 
 	g_free(graph);
 	
@@ -78,8 +96,8 @@ int main(void) {
 	
 	printf("capacity: %d\n", array->capacity);
 
-	da_remove(array, array->size-1);
-	da_remove(array, array->size-1);
+	free(da_remove(array, array->size-1));
+	free(da_remove(array, array->size-1));
 	
 	printf("capacity: %d\n", array->capacity);
 
@@ -95,10 +113,12 @@ int main(void) {
 	printf("Test for binary heap\n");
 	struct binary_heap* bh = bh_create(10, compare, init);
 	
-	bh_insert(bh, init(30));
+	bh_insert(bh, init(9));
 
 	for(int i = 0; i < 11; i++) {
-		printf("%d ", *((int*)bh_extract(bh)));
+		int* bh_value = bh_extract(bh);
+		printf("%d ", *bh_value);
+		free(bh_value);
 	}
 	printf("\n");
 

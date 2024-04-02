@@ -4,6 +4,11 @@
 #include <stdbool.h>
 #include "linked_list.h"
 
+struct graph_edge { 
+	int neighbour;
+	int weight;
+};
+
 struct graph_vertice {
 	int name;
 	struct linked_list* neighbours;
@@ -16,10 +21,14 @@ struct graph {
 
 struct graph* g_create(int size, bool complete);
 
+void add_edge(struct graph* graph, int strt_node, int end_node, int weight, bool oriented);
+
 void g_free(struct graph* graph);
 
 int* depth_first_search(struct graph* graph, int strt_node);
 
 int* breadth_first_search(struct graph* graph, int strt_node);
+
+int* djikstra(struct graph* graph, int strt_node);
 
 #endif
