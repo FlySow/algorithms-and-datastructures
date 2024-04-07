@@ -7,6 +7,7 @@
 #include "queue.h"
 #include "dynamic_array.h"
 #include "binary_heap.h"
+#include "union_find.h"
 
 void* init(const int i) {
 	int* res = malloc(sizeof(int));
@@ -89,6 +90,19 @@ int main(void) {
 	
 	free(pred);
 
+	add_edge(graph, 2, 4, 1, true);
+	add_edge(graph, 3, 4, 1, true);
+	add_edge(graph, 4, 8, 1, true);
+	add_edge(graph, 2, 1, 1, true);
+
+	struct linked_list* spanning_tree = kruskal(graph);
+	for(int i = 0; i < spanning_tree->size; i++) {
+		struct graph_undirected_edge* edge = ll_get(spanning_tree, i);
+		printf("%d - %d\n", edge->n1, edge->n2);
+	}
+
+	ll_free(spanning_tree);
+
 	g_free(graph);
 	
 	printf("Test for dynamic array data structure\n");
@@ -124,6 +138,23 @@ int main(void) {
 
 	bh_free(bh);
 	
+	printf("Test for union find data structure\n");
+
+	struct union_find* uf = uf_create(10);
+	
+	for(int i = 0; i < 10; i++) {
+		printf("repr of %d is %d\n", i, uf_find(uf, i));
+	}
+
+	for(int i = 0; i < 10; i++) {
+		uf_union(uf, 0, i);
+	}
+
+	for(int i = 0; i < 10; i++) {
+		printf("repr of %d is %d\n", i, uf_find(uf, i));
+	}
+	
+	uf_free(uf);
 
 	return EXIT_SUCCESS;
 }
